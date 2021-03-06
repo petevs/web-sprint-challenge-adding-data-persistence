@@ -1,6 +1,7 @@
 // build your server here and require it from index.js
 const express = require('express')
 const helmet = require('helmet')
+const projectsRouter = require('./project/router')
 
 const server = express()
 
@@ -12,5 +13,6 @@ server.get('/', ( req, res ) => {
         message: 'hi there'
     })
 })
+server.use('/api/projects', projectsRouter)
 
 module.exports = server
