@@ -1,6 +1,14 @@
 // build your `Task` model here
 const db = require('../../data/dbConfig')
 
+const toBoolean = (num) => {
+    if(num === 0 || null){
+        return false
+    } if(num === 1){
+        return true
+    }
+}
+
 //add a new task and return newly created task
 const addTask = async (task) => {
     
@@ -12,16 +20,21 @@ const addTask = async (task) => {
             project_id: task.project_id
         })
 
-    return db('tasks')
+    const result = await db('tasks')
         .select('*')
         .where('task_id', id)
         .first()
 
+    return {
+        ...result,
+        task_completed: toBoolean(result.task_completed)
+    }
+
 }
 
 //Get all tasks
-const getTasks = () => {
-    return db({t: 'tasks'})
+const getTasks = async () => {
+    const tasks = await db({t: 'tasks'})
         .join({p: 'projects'}, 'p.project_id', 't.project_id')
         .select(
             't.task_id',
@@ -31,6 +44,10 @@ const getTasks = () => {
             'p.project_name',
             'p.project_description'
         )
+    return tasks.map(task => { return {
+        ...task,
+        task_completed: toBoolean(task.task_completed)
+    }})
 }
 
 module.exports = {

@@ -2,9 +2,9 @@
 const db = require('../../data/dbConfig')
 
 const toBoolean = (num) => {
-    if(num === 0){
+    if(num === 0 || null){
         return false
-    } else {
+    } if(num === 1){
         return true
     }
 }
