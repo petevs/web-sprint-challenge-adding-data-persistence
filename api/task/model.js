@@ -9,14 +9,23 @@ const toBoolean = (num) => {
     }
 }
 
+const toInt = (value) => {
+    if(value === true || value === 1 || value === '1'){
+        return 1
+    }
+    else {
+        return 0
+    }
+}
+
 //add a new task and return newly created task
 const addTask = async (task) => {
-    
+
     const [id] = await db('tasks')
         .insert({
             task_description: task.task_description,
             task_notes: task.task_notes,
-            task_completed: task.task_completed,
+            task_completed: toInt(task.task_completed),
             project_id: task.project_id
         })
 

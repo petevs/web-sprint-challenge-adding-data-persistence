@@ -9,6 +9,15 @@ const toBoolean = (num) => {
     }
 }
 
+const toInt = (value) => {
+    if(value === true || value === 1 || value === '1'){
+        return 1
+    }
+    else {
+        return 0
+    }
+}
+
 
 const getProjects = async () => {
     const projects = await db('projects')
@@ -26,7 +35,7 @@ const addProject = async (project) => {
         .insert({
             project_name: project.project_name,
             project_description: project.project_description,
-            project_completed: project.project_completed
+            project_completed: toInt(project.project_completed)
         })
 
     const result = await db('projects')
