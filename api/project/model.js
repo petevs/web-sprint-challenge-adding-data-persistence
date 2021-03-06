@@ -1,9 +1,22 @@
 // build your `Project` model here
 const db = require('../../data/dbConfig')
 
-const getProjects = () => {
-    return db('projects')
+const toBoolean = (num) => {
+    if(num === 0){
+        return false
+    } else {
+        return true
+    }
+}
+
+
+const getProjects = async () => {
+    const projects = await db('projects')
         .select('*')
+    return projects.map(project => { return {
+        ...project,
+        project_completed: toBoolean(project.project_completed)
+    }})
 }
 
 
@@ -16,10 +29,12 @@ const addProject = async (project) => {
             project_completed: project.project_completed
         })
 
-    return db('projects')
-        .select('*')
-        .where('project_id', id)
-        .first()
+    const result = await db('projects')
+    .select('*')
+    .where('project_id', id)
+    .first()
+
+    return {...result, project_completed: toBoolean(result.project_completed)}
 
 }
 
