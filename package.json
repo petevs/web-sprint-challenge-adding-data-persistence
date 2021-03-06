@@ -4,13 +4,22 @@
   "description": "Data Persistence Challenge",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=testing jest --watch --verbose --runInBand --silent"
+    "test": "cross-env NODE_ENV=testing jest --watch --verbose --runInBand --silent",
+    "server": "nodemon index.js",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/web-sprint-challenge-adding-data-persistence.git"
   },
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "knex": "^0.95.1",
+    "nodemon": "^2.0.7",
+    "sqlite3": "^5.0.2"
+  },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "eslint": "^7.18.0",
