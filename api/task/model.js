@@ -21,8 +21,16 @@ const addTask = async (task) => {
 
 //Get all tasks
 const getTasks = () => {
-    return db('tasks')
-        .select('*')
+    return db({t: 'tasks'})
+        .join({p: 'projects'}, 'p.project_id', 't.project_id')
+        .select(
+            't.task_id',
+            't.task_description',
+            't.task_notes',
+            't.task_completed',
+            'p.project_name',
+            'p.project_description'
+        )
 }
 
 module.exports = {
